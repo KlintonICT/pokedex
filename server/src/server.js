@@ -1,10 +1,13 @@
 const express = require('express')
 const cors = require('cors')
 const _ = require('lodash')
+const logger = require('morgan')
+
 const app = express()
 
 const { cards } = require('./mock/cards.json')
 
+app.use(logger('combined'))
 app.use(cors())
 
 app.get('/api/cards', (req, res) => {
