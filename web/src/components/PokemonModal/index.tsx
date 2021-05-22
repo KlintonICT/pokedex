@@ -66,6 +66,7 @@ const PokemonModal = ({ isOpen, onClose, pokedexes, setPokedexes }: IProps) => {
         console.log('Getting Pokemon: ', error);
         setLoading.off();
       });
+    // eslint-disable-next-line
   }, [page, debounceSearchValue]);
 
   const gotoPage = (p: number) => {

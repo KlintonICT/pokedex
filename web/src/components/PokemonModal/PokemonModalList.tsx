@@ -15,6 +15,7 @@ const PokemonList = ({ pokemons, pokedexes, setPokedexes }: IProps) => {
   useEffect(() => {
     const filtered = filteredPokemonsFromPokedex();
     setFilteredPokemons(filtered);
+    // eslint-disable-next-line
   }, []);
 
   const filterPokemon = (id: string) => {
@@ -25,7 +26,7 @@ const PokemonList = ({ pokemons, pokedexes, setPokedexes }: IProps) => {
 
   const filteredPokemonsFromPokedex = () => {
     let filtered: IPokemon[] = [...pokemons];
-    pokedexes.map((_pokedex: IPokemon) => {
+    pokedexes.forEach((_pokedex: IPokemon) => {
       filtered = [...filtered].filter((_pokemon: IPokemon) => _pokemon.id !== _pokedex.id);
     });
     return filtered;
