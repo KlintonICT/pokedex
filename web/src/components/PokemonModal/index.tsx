@@ -42,8 +42,7 @@ const PokemonModal = ({ isOpen, onClose, pokedexes, setPokedexes }: IProps) => {
 
   const getPokemons = async (offset = 0, search = '') => {
     let URI = `${ROUTE_API.cards}?`;
-    if (search) URI += `&name=${search}&type=${search}`;
-    else URI += `offset=${offset}&limit=${limit}`;
+    URI += search ? `&name=${search}&type=${search}` : `offset=${offset}&limit=${limit}`; // paginate getting pokemon list if there is no searching value
 
     const response = await HttpUtil.get(URI);
 
@@ -92,17 +91,19 @@ const PokemonModal = ({ isOpen, onClose, pokedexes, setPokedexes }: IProps) => {
         <ModalBody>
           <Box textAlign="center">
             {isLoading && <Spinner textAlign="center" color="bottomBarBackground" size="lg" />}
+            {/* display when all pokemons are added into pokedex or no searching pokemons are found */}
             {((!isLoading && pokemons?.length === 0) || pokedexes.length === totalCards) && (
               <Text color="bottomBarBackground">No Pokemons are found.</Text>
             )}
           </Box>
 
+          {/* display when pokemons are found after fetching pokemons list and there are some pokemons are not added into pokedex*/}
           {!isLoading && pokemons.length > 0 && pokedexes.length < totalCards && (
             <PokemonModalList {...{ pokemons, setPokedexes, pokedexes }} />
           )}
         </ModalBody>
 
-        {/* Modal Pagination */}
+        {/* Modal Pagination, display when no searching value and there are some pokemons are not added into pokedex */}
         {!isLoading && pokemons?.length > 0 && pokedexes.length < totalCards && !debounceSearchValue && (
           <ModalFooter>
             <Flex w="100%">
